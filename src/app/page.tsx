@@ -1,94 +1,51 @@
-import Image from 'next/image'
+"use client";
 import styles from './page.module.css'
+import { useRef, useState } from 'react';
+import Scanner  from '../components/Scanner'
+import Result from '../components/Result'
+import Quagga from '@ericblade/quagga2';
 
 export default function Home() {
+  const [scanning, setScanning] = useState(false);
+    const [results, setResults] = useState([]);
+    const scannerRef = useRef(null);
+
+    const startScanning=()=>
+    {
+      setScanning(true)
+    }
+
+    const stopScanning=()=>
+    {
+      setScanning(false);
+      Quagga.stop();
+    }
+
+
+    const handleDetected=(result)=> {
+      setResults([...results, result]);
+      setScanning(false);
+    }
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <div>
+        <p>Scan Bar Code for Product</p>
+            <button onClick={startScanning}>Start</button>
+            <button onClick={stopScanning}>Stop</button>
+            <ul className="results">
+                {results.map((result) => (result.codeResult && <Result key={result.codeResult.code} result={result} />))}
+            </ul>
+            <div ref={scannerRef} style={{position: 'relative'}}>
+                <canvas className="drawingBuffer" style={{
+                    position: 'absolute',
+                    top: '0px',
+                    border: '3px solid green',
+                }} width="640" height="480" />
+                {scanning ? <Scanner scannerRef={scannerRef} onDetected={(result)=>handleDetected(result)} /> : null}
+            </div>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+       
       </div>
     </main>
   )
