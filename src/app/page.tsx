@@ -1,6 +1,7 @@
 "use client";
 
-import styles from './page.module.css'
+import React from 'react'
+import "../styles/HomePage.css"
 import { useRef, useState } from 'react';
 import Scanner  from '../components/Scanner'
 import Quagga from '@ericblade/quagga2';
@@ -30,26 +31,27 @@ export default function Home() {
       router.push(`/product?productCode=${code}`);
     }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-      <div>
-        <p>Scan Bar Code for Product</p>
-            <button onClick={startScanning}>Start</button>
-            <button onClick={stopScanning}>Stop</button>
-            {/* <ul className="results">
-                {results.map((result) => (result.codeResult && <Result key={result.codeResult.code} result={result} />))}
-            </ul> */}
-            <div ref={scannerRef} style={{position: 'relative'}}>
+    <>
+      <div className="title">
+          <h2>Scan Product</h2>
+      </div>
+      <div className="buttons">
+          <button className="button" onClick={startScanning}>Start</button>
+      </div>
+      <div className="buttons">
+          <button className="button" onClick={stopScanning}>Stop</button>
+       </div>
+       <div ref={scannerRef} style={{position: 'relative'}}>
                 <canvas className="drawingBuffer" style={{
                     position: 'absolute',
                     top: '0px',
                     border: '3px solid green',
-                }} width="640" height="480" />
+                    margin:'2px',
+                    width:'631px',
+                    height:'473px'
+                }}   />
                 {scanning ? <Scanner scannerRef={scannerRef} onDetected={(result)=>handleDetected(result.codeResult.code)} /> : null}
             </div>
-        </div>
-       
-      </div>
-    </main>
+    </>
   )
 }
