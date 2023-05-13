@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader"
+import "../../styles/Product.css"
 
 export default function Page() {
 
@@ -67,23 +68,26 @@ export default function Page() {
 
     return (<>
         {loaderSpinnig && <Loader />}
-        <div>
-            <h3>Product Details</h3>
-            <div>
-            <label>Brand</label>
-            <input type="text" name="brand" onChange={handleInput} value={productDetails.brand} />
-          </div>
-          <div>
-            <label>Description</label>
-            <input type="text" name="description" onChange={handleInput} value={productDetails.description} />
-          </div>
-          <div>
-            <label>Category Id</label>
-            <input type="number" name="category_id" onChange={handleInput} value={productDetails.category_id} />
-          </div>
-          <button onClick={updateProduct}>Update Product</button>
-          <button onClick={scanProduct}>Scan Product</button>
-
+        <div className="title">
+            <h2>Product Details</h2>
+        </div>
+        <div className='form'>
+            <div className='field'>
+                <label>Brand</label>
+                <input type="text" name="brand" onChange={handleInput} value={productDetails.brand} />
+            </div>
+            <div className='field' >
+                <label>Description</label>
+                <input type="text" name="description" onChange={handleInput} value={productDetails.description} />
+            </div>
+            <div className='field'>
+                <label>Category Id</label>
+                <input type="number" name="category_id" onChange={handleInput} value={productDetails.category_id} />
+            </div>
+            <div className='buttons'>
+                <button onClick={updateProduct}>Update Product</button>
+                <button onClick={scanProduct}>Scan Product</button>
+            </div>
         </div>
         </>
     )
