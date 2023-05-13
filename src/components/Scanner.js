@@ -63,7 +63,6 @@ const Scanner = ({
             Quagga.start();
         });
         Quagga.onDetected(function (data) {
-            console.log(data.codeResult.code);
             onDetected(data);
             Quagga.stop();
         });
