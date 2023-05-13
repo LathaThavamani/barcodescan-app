@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <>
       <div className="title">
-          <h2>Scan Product</h2>
+          <h2>Product Bar Code Scanner - Scan Product</h2>
       </div>
       <div className="buttons">
           <button className="button" onClick={startScanning}>Start</button>
