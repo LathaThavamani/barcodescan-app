@@ -13,18 +13,21 @@ export default function Home() {
     const scannerRef = useRef(null);
     const router = useRouter();
 
+    // Start to scan 
     const startScanning=()=>
     {
       setScanning(true)
     }
 
+    // stop the scan
     const stopScanning=()=>
     {
       setScanning(false);
+      // stop the web camera
       Quagga.stop();
     }
 
-
+    // Redirect to product details page once scanner detected the product bar code
     const handleDetected=(code)=> {
       setProductCode(code);
       setScanning(false);

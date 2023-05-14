@@ -7,17 +7,20 @@ import "../../styles/Product.css"
 
 export default function Page() {
 
+    // Get product code from the router URL
     const searchParams = useSearchParams();
     const productCode=searchParams.get('productCode');
     const [productDetails, setProductDetails] = useState({});
     const [loaderSpinnig, setLoaderSpinning] = useState(true);
     const router=useRouter()
 
+    // Get product details from json server API
     const getProductDetails= async ()=>{
          const res=await fetch(`http://localhost:3001/products/${productCode}`, {
             method: 'GET'
         })
         if(!res.ok){
+            // Show alert if scanned product code not exists
             alert("Product not found. Please scan bar code properly or scan correct bar code");
             router.push("/");
             return false;
@@ -25,6 +28,7 @@ export default function Page() {
         return (res.json());
     }
 
+    // Updating field value in state prodcut object when chanding input
     const handleInput = (e) => {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -35,6 +39,7 @@ export default function Page() {
         }));
       }
 
+      // Updating field value in state prodcut object when chanding check box type
       const handleCheckBox = (e) => {
         const fieldName = e.target.name;
         const fieldValue = e.target.checked;
@@ -44,6 +49,7 @@ export default function Page() {
           [fieldName]: fieldValue
         }));
 
+        // Clear best before date when requires best before date is unchecked
         if(fieldName=="requires_best_before_date" && !fieldValue)
         {
             setProductDetails((prevState) => ({
@@ -53,6 +59,7 @@ export default function Page() {
         }
       }
 
+      // Update the values in json object using JSOn server post API
       const updateProduct = () => {
         return fetch(`http://localhost:3001/products/${productCode}`, {
             method: 'PUT',
@@ -62,27 +69,26 @@ export default function Page() {
             body: JSON.stringify(productDetails)
         }).then(res => res.json())
         .then((data) => {
+            // Updated changes in db JSON successfully
             alert("Updated successfully")
           })
       }
 
+      // Redirect to scan product page
       const scanProduct=()=>{
         router.push("/");
       }
 
     useEffect(() => {   
+        // Get product details on page load
         const callAsyncMethods= async ()=>{
             let details = await getProductDetails();
             setProductDetails(details);
+            // Set loader status false
             setLoaderSpinning(false)
         }
         callAsyncMethods();
     }, []);
-
-    useEffect(() => {
-    }, [productDetails]);
-
-    
 
     return (<>
         {loaderSpinnig?<Loader />:
