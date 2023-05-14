@@ -27,7 +27,7 @@ export default function Home() {
       Quagga.stop();
     }
 
-    // Redirect to product details page once scanner detected the product bar code
+    // Redirect to product details page once scanner detected the product barcode
     const handleDetected=(code)=> {
       setProductCode(code);
       setScanning(false);
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       <div className="title">
-          <h2>Product Bar Code Scanner - Scan Product</h2>
+          <h2>Product Barcode Scanner - Scan Product</h2>
       </div>
       <div className="buttons">
           <button className="button" onClick={startScanning}>Start</button>

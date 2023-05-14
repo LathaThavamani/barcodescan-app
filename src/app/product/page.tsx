@@ -21,7 +21,7 @@ export default function Page() {
         })
         if(!res.ok){
             // Show alert if scanned product code not exists
-            alert("Product not found. Please scan bar code properly or scan correct bar code");
+            alert("Product not found. Please scan barcode properly or scan correct barcode");
             router.push("/");
             return false;
         }

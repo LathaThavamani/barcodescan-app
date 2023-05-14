@@ -29,7 +29,7 @@ const Scanner = ({
             Quagga.start();
         });
 
-        // This method will call once camera detected the bar code
+        // This method will call once camera detected the barcode
         Quagga.onDetected(function (data) {
             // Call back method with dectected product code
             onDetected(data);
